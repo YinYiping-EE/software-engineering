@@ -224,6 +224,16 @@ Optional extensions include history pagination, keyboard input, record reuse, br
 
 Vue owns interaction and presentation. Express owns validation, expression processing and database access. They communicate using HTTP/JSON. During development, Vite proxies `/api` to the backend. In production, Nginx serves the built frontend and proxies the same relative `/api` paths to a backend bound to localhost. This keeps the frontend independent of a hard-coded backend address while retaining separate application responsibilities.
 
+### Technology choices and reasons
+
+| Technology | Responsibility | Reason for choosing it |
+|---|---|---|
+| Vue + Vite | Frontend components and build | Reactive state displays responses and history; media, the whale and status remain separate components; the build produces independent static files |
+| Node.js + Express | Backend HTTP service | Routes, calculation and storage can be tested separately and connected through explicit JSON contracts |
+| SQLite | Persistent history | A single-file database suits this small project without another database service; first startup initializes it |
+| Custom recursive descent parser | Expression processing | A limited arithmetic grammar provides control over precedence, errors and bounds without executing user code |
+| Nginx + systemd | Cloud operations | HTTPS, static hosting, reverse proxying and backend service management have distinct responsibilities |
+
 ### Front-end design
 
 `App.vue` maintains the expression, loading state, returned calculation and history list. It submits an expression, checks the response and displays the backend result. It contains no arithmetic evaluator. History is refreshed after successful insertion or deletion; request sequence numbers prevent an older response from overwriting a newer list.
@@ -355,11 +365,31 @@ An additional live-process audit created eight records, rejected `1+`, `1/0` and
 
 The production application is hosted on an Alibaba Cloud Ubuntu 24.04 server with two CPU cores. Nginx handles HTTPS and static files; systemd runs the backend as a dedicated service with a memory limit. Runtime secrets and persistent SQLite data are stored separately from code releases. The server profile was sold as 2 GB, while the operating system reports approximately 1.58 GiB total usable memory; the status card reports measured values. The October 5 check found both Nginx and the calculator service active and the health/status endpoints responding.
 
+The deployment sequence is:
+
+1. Pass the local tests, build the frontend and place `dist` in a server release directory for Nginx to serve.
+2. Install production backend dependencies and configure a separate persistent database and session key; keep runtime configuration outside the source directory.
+3. Bind the API to `127.0.0.1:3001`; proxy same-origin `/api` traffic through Nginx and overwrite visitor forwarding headers.
+4. Use systemd for startup, restart and memory limits, with HTTPS renewal and SQLite backups.
+5. Check HTTP-to-HTTPS redirection, health, metrics and actual calculation/history/deletion. Keep the public service online during evaluation.
+
 For local reproduction, use Node.js 24.12 or later. In the backend repository run `npm ci`, copy `.env.example` to `.env` if configuration is needed, and run `npm run dev`. First startup initializes SQLite. In the frontend repository run `npm ci` and `npm run dev`; visit `http://127.0.0.1:5173/`. Both repositories have standalone lockfiles and instructions. Keep the backend database and session key when testing restart persistence.
 
 For a short demonstration, show `12+8`, `1+2*3`, `(1+2)*3`, `3*-2`, `0.1+0.2`, the two error cases, refresh persistence and deletion of your own test record. Then demonstrate the language switch and live cloud status. Backend shutdown/restart tests should be done in the isolated local environment to avoid interrupting the grading site.
 
 ## Personal Learning and Reflection
+
+### Actual problems and their solutions
+
+| Problem | Diagnostic evidence | Solution and verification |
+|---|---|---|
+| Earlier history endpoints did not isolate visitors | Public list and delete operations lacked owner filtering, potentially exposing record metadata to other visitors | Add a signed anonymous identity and scope queries/deletes by `owner_id`; two identities cannot see each other's records and a foreign deletion returns 404 |
+| Concurrent first-load requests could compete to establish browser identity | History and status load together; if both issued a new identity cookie, response order could affect later ownership | Make `/api/status` a public aggregate endpoint without history cookie issuance; regression tests confirm no Set-Cookie while history retains identity handling |
+| Local isolated-test history disappeared from the display after a reload | Rows remained in SQLite, but different development services on the same hostname share cookies across ports | Preserve an independent HTTP client's test cookie and signing key across actual backend process restarts; verify eight retained records, then seven after deleting one ID and restarting again |
+
+These checks distinguish presentation state, browser identity and persistent database state. Diagnosing missing history requires checking the response, identity changes and stored rows rather than assuming that an empty list proves data loss.
+
+### Understanding the separation boundary
 
 The main lesson I take from this project is that front-end/back-end separation is a division of responsibility enforced through an interface. Separating folders is useful, but the essential question is which side owns each operation. In this calculator, the frontend describes a calculation request and presents the response; the backend decides whether the expression is valid, computes its result and persists it. This boundary makes it possible to change the interface without changing the calculation rules.
 
