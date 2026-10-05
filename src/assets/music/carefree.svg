@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160">
+  <defs><linearGradient id="sky" x2="1" y2="1"><stop stop-color="#d9d4ff"/><stop offset="1" stop-color="#8795da"/></linearGradient></defs>
+  <rect width="160" height="160" rx="24" fill="url(#sky)"/>
+  <circle cx="114" cy="44" r="23" fill="#ffe6b5"/>
+  <path d="M0 107Q37 73 80 109T160 96V160H0Z" fill="#c8c5f6"/>
+  <path d="M0 129Q47 103 92 126T160 113V160H0Z" fill="#7a87c9"/>
+  <path d="M28 44v10m-5-5h10m21-19v6m-3-3h6" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+  <path d="M30 88c2-12 17-12 19 0M56 75c2-8 12-8 14 0" fill="none" stroke="#faf4ff" stroke-width="3" stroke-linecap="round"/>
+  <text x="17" y="144" fill="#fff" font-family="sans-serif" font-size="11" letter-spacing="2">CAREFREE</text>
+</svg>

@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="基于涂鸦 AIoT 的端边协同智能批改机器人。探索从卷面识别、AI 批改到 CoreXY 纸面书写的完整流程，以及 App、Web 控制台与模块化硬件。">
+  <meta name="theme-color" content="#f8f9fb">
+  <title>ScriptChisel · AI 反馈，回到纸面</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23ff5c35'/%3E%3Cpath d='M10 22l2-7 9-9 5 5-9 9z' fill='white'/%3E%3Cpath d='M7 26h18' stroke='white' stroke-width='2'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+  <script src="main.js" defer></script>
+  <link rel="stylesheet" href="/navigation/page-switcher.css">
+  <script src="/navigation/page-switcher.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳至正文</a>
+  <header class="header">
+    <a class="brand" href="#" aria-label="ScriptChisel 首页"><span class="brand-mark" aria-hidden="true">S<span>c</span></span><span>ScriptChisel<small>智能批改机器人</small></span></a>
+    <nav class="nav" aria-label="主导航">
+      <a href="#workflow">工作流程</a><a href="#hardware">硬件设计</a><a href="#app">App 与控制台</a><a href="#research">研究方向</a>
+    </nav>
+    <a class="header-link" href="#demo">观看运动演示</a>
+  </header>
+  <div class="wrap">
+    <nav class="page-switcher" data-page="scriptchisel" aria-label="页面切换">
+      <a href="/">
+        <span class="page-switcher-icon" aria-hidden="true">=</span>
+        <span class="page-switcher-copy"><strong data-page-label="calculator">算数记</strong><small data-page-label="calculatorCaption">计算器</small></span>
+      </a>
+      <a href="/scriptchisel/" aria-current="page">
+        <span class="page-switcher-icon" aria-hidden="true">S</span>
+        <span class="page-switcher-copy"><strong>ScriptChisel</strong><small data-page-label="projectCaption">项目展示</small></span>
+      </a>
+    </nav>
+  </div>
+
+  <main id="main">
+    <section class="hero wrap" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="short-line"></span>AIoT · 从数字理解到物理书写</p>
+        <h1 id="hero-title">让 AI 的反馈，<br>回到<span class="accent">纸面。</span></h1>
+        <p class="hero-description">识别纸质作业，理解学生答案，驱动写字机构完成批注。<br class="desktop-break">保留纸笔习惯，让一次批改连接纸面、终端与云端。</p>
+        <div class="hero-actions"><a class="button button-dark" href="#workflow">探索批改流程</a><a class="text-link" href="#hardware">了解整机设计<span class="link-underline"></span></a></div>
+        <div class="hero-tags"><span>卷面实例分割</span><span>视觉大模型</span><span>CoreXY 书写</span><span>涂鸦 AIoT</span></div>
+      </div>
+      <figure class="hero-visual" id="demo">
+        <div class="visual-topline"><span>AI TO INK</span><span>APP 同源运动动画</span></div>
+        <img id="motion" class="machine-motion" src="assets/writing-machine.gif" width="640" height="480" alt="与 App 首页同源的写字机三维运动动画，展示整机及书写机构运动">
+        <figcaption class="visual-caption"><span><strong>ScriptChisel</strong><small>端边协同智能批改终端</small></span><button class="motion-toggle" id="motion-toggle" type="button" aria-pressed="false" aria-label="暂停写字机动画"><span class="pause-icon" aria-hidden="true"></span><span id="motion-label">暂停动画</span></button></figcaption>
+      </figure>
+    </section>
+
+    <div class="architecture-strip wrap" aria-label="系统组成"><span class="strip-label">一个完整的纸面反馈闭环</span><span>视觉采集</span><i aria-hidden="true">/</i><span>边缘处理</span><i aria-hidden="true">/</i><span>云端理解</span><i aria-hidden="true">/</i><span>实体书写</span><i aria-hidden="true">/</i><span>任务追踪</span></div>
+
+    <section class="section wrap" id="workflow" aria-labelledby="workflow-title">
+      <div class="section-heading"><div><p class="eyebrow">01 / WORKFLOW</p><h2 id="workflow-title">一张答卷，<br>如何变成可执行的批注？</h2></div><p class="section-intro">相机采集卷面，本地提取题目与作答区域。AI 返回反馈后，系统安排书写区域，并将批注转换为机械运动轨迹。</p></div>
+      <div class="workflow-layout">
+        <div class="workflow-content">
+          <div class="step-controls" role="tablist" aria-label="查看卷面处理阶段">
+            <button class="step active" id="step-0" role="tab" aria-selected="true" aria-controls="stage-panel" type="button" data-stage="0"><span class="step-number">01</span><span><strong>采集原始答卷</strong><small>保留题干、公式与手写上下文</small></span><span class="step-mark" aria-hidden="true">＋</span></button>
+            <button class="step" id="step-1" role="tab" aria-selected="false" aria-controls="stage-panel" type="button" data-stage="1" tabindex="-1"><span class="step-number">02</span><span><strong>识别题目与答案</strong><small>实例分割与题目、作答区域匹配</small></span><span class="step-mark" aria-hidden="true">＋</span></button>
+            <button class="step" id="step-2" role="tab" aria-selected="false" aria-controls="stage-panel" type="button" data-stage="2" tabindex="-1"><span class="step-number">03</span><span><strong>安排批注位置</strong><small>分析已占区域与可用空白空间</small></span><span class="step-mark" aria-hidden="true">＋</span></button>
+          </div>
+          <p class="workflow-note" id="stage-description">从真实答卷采集图像，保留题目与学生作答的空间关系。右侧为项目已有的同页处理示例。</p>
+          <div class="ink-detail"><span class="mini-label">下一步 · 将反馈变成笔迹</span><h3>文本渲染 → 骨架提取 → 路径规划</h3><p>批注在本地转换为笔画，经过合并与顺序优化，再生成 G-code 驱动书写机构。</p><div class="stroke-preview"><button class="image-button" data-zoom="assets/rendered-text.webp" data-caption="批注内容的本地渲染示例" aria-label="放大文字渲染示例"><img src="assets/rendered-text.webp" alt="数学解答文字和公式渲染示例" loading="lazy"></button><button class="image-button" data-zoom="assets/strokes.webp" data-caption="由骨架提取生成的分色笔画路径" aria-label="放大分色笔画路径"><img src="assets/strokes.webp" alt="由文本骨架生成的不同颜色笔画路径" loading="lazy"></button></div></div>
+        </div>
+        <figure class="paper-panel" id="stage-panel" role="tabpanel" aria-labelledby="step-0" tabindex="0">
+          <div class="paper-heading"><span id="stage-kicker">原始答卷</span><span>同一页 · 三个阶段</span></div>
+          <button class="image-button paper-image-button" id="stage-zoom" data-zoom="assets/pipeline-original.webp" data-caption="原始答卷：项目已有的卷面示例" aria-label="放大当前卷面处理图"><img id="stage-image" src="assets/pipeline-original.webp" width="946" height="1400" alt="真实手写数学答卷的原始图像" loading="lazy"></button>
+          <figcaption>项目已有流程图素材 · 点击图片查看细节</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="hardware-section" id="hardware" aria-labelledby="hardware-title">
+      <div class="wrap">
+        <div class="section-heading"><div><p class="eyebrow">02 / HARDWARE</p><h2 id="hardware-title">理解之后，<br>让机械完成最后一笔。</h2></div><p class="section-intro">模块化整机把进纸、平面书写与电控分层组织。边缘终端承担视觉处理和路径规划，控制器负责执行运动指令。</p></div>
+        <div class="hardware-layout">
+          <figure class="hardware-image"><button class="image-button" id="hardware-zoom" data-zoom="assets/machine.webp" data-caption="模块化整机三维设计" aria-label="放大硬件设计图"><img id="hardware-image" src="assets/machine.webp" width="1600" height="888" alt="智能批改机器人模块化整机三维设计" loading="lazy"></button><figcaption id="hardware-caption">模块化整机三维设计</figcaption></figure>
+          <div class="hardware-info"><div class="hardware-tabs" role="tablist" aria-label="查看硬件模块"><button class="hardware-tab active" type="button" role="tab" id="hardware-tab-0" aria-selected="true" aria-controls="hardware-detail" data-hardware="0">整机</button><button class="hardware-tab" type="button" role="tab" id="hardware-tab-1" aria-selected="false" aria-controls="hardware-detail" data-hardware="1" tabindex="-1">书写层</button><button class="hardware-tab" type="button" role="tab" id="hardware-tab-2" aria-selected="false" aria-controls="hardware-detail" data-hardware="2" tabindex="-1">进纸层</button><button class="hardware-tab" type="button" role="tab" id="hardware-tab-3" aria-selected="false" aria-controls="hardware-detail" data-hardware="3" tabindex="-1">电控层</button></div>
+          <div id="hardware-detail" role="tabpanel" aria-labelledby="hardware-tab-0"><span class="mini-label" id="hardware-label">MODULAR SYSTEM</span><h3 id="hardware-name">三层结构，一条处理链路。</h3><p id="hardware-description">进纸机构、CoreXY 书写平台与顶层电控舱协同工作。模块化结构便于维护，也为视觉、运动控制和云端通信保留清晰的接口。</p></div>
+          <dl class="hardware-specs"><div><dt>平面书写</dt><dd>CoreXY 运动机构</dd></div><div><dt>边缘计算</dt><dd>RK3588</dd></div><div><dt>控制执行</dt><dd>ESP32 / GRBL</dd></div><div><dt>设备互联</dt><dd>TuyaLink MQTT</dd></div></dl></div>
+        </div>
+        <div class="build-gallery"><figure><button class="image-button" data-zoom="assets/prototype.webp" data-caption="已搭建的机器人实物" aria-label="放大机器人实物照片"><img src="assets/prototype.webp" alt="项目机器人实物，含透明外壳、书写平台和上层电控" loading="lazy"></button><figcaption><span>01</span> 从设计到实际样机</figcaption></figure><figure><button class="image-button" data-zoom="assets/corexy.webp" data-caption="CoreXY 书写平台结构设计" aria-label="放大 CoreXY 结构图"><img src="assets/corexy.webp" alt="CoreXY 书写机构的机械设计俯视图" loading="lazy"></button><figcaption><span>02</span> 平面运动与笔尖控制</figcaption></figure><figure><button class="image-button" data-zoom="assets/pcb.webp" data-caption="ScriptChisel 控制板三维设计" aria-label="放大控制板设计图"><img src="assets/pcb.webp" alt="ScriptChisel 控制板三维设计，含电源及电机接口" loading="lazy"></button><figcaption><span>03</span> 面向设备的控制电路</figcaption></figure></div>
+      </div>
+    </section>
+
+    <section class="section wrap" id="app" aria-labelledby="app-title">
+      <div class="section-heading"><div><p class="eyebrow">03 / CONNECTED EXPERIENCE</p><h2 id="app-title">纸面有反馈，<br>每一步也都有记录。</h2></div><p class="section-intro">涂鸦 App 面板与本地 Web 控制台，让批改任务、设备状态和执行进度可以查看与追踪。</p></div>
+      <div class="app-layout"><div class="app-copy"><span class="mini-label orange">TUYA RAY PANEL</span><h3>在手机上，<br>看见任务的全过程。</h3><p>查看设备状态、批改进度与书写阶段，发起任务并获取执行反馈。首页运动动画与这张介绍页使用同源素材。</p><ul class="feature-list"><li><span>01</span><div><strong>任务入口</strong><p>连接设备与批改任务，统一查看执行状态。</p></div></li><li><span>02</span><div><strong>阶段进度</strong><p>检测、批改、渲染与书写过程清晰呈现。</p></div></li><li><span>03</span><div><strong>异常追踪</strong><p>保留任务事件与失败信息，便于复核和排查。</p></div></li></ul><span class="sample-label">以下为项目已有 App 界面截图</span></div><div class="phones"><figure class="phone phone-primary"><button class="image-button" data-zoom="assets/app-panel.webp" data-caption="涂鸦 App 面板：任务入口界面" aria-label="放大 App 任务入口截图"><img src="assets/app-panel.webp" width="562" height="968" alt="涂鸦 App 面板截图，展示写字机动画、作业批改终端及任务入口" loading="lazy"></button></figure><figure class="phone phone-secondary"><button class="image-button" data-zoom="assets/app-panel-detail.webp" data-caption="涂鸦 App 面板：设备状态与阶段进度" aria-label="放大 App 设备状态截图"><img src="assets/app-panel-detail.webp" width="558" height="1077" alt="涂鸦 App 面板截图，展示设备状态、处理阶段与执行信息" loading="lazy"></button></figure></div></div>
+      <div class="dashboard-block"><div class="dashboard-description"><span class="mini-label">LOCAL WEB CONSOLE</span><h3>一处查看卷面、对话与任务。</h3><p>Web 控制台串联卷面预览、AI 交互和书写控制，为本地操作与调试提供工作界面。</p></div><button class="image-button dashboard-image" data-zoom="assets/dashboard.webp" data-caption="项目本地 Web 控制台截图" aria-label="放大 Web 控制台截图"><img src="assets/dashboard.webp" width="1600" height="1021" alt="智能批改机器人 Web 控制台，包含设备控制、AI 对话和卷面结果" loading="lazy"></button></div>
+    </section>
+
+    <section class="research-section" id="research" aria-labelledby="research-title"><div class="wrap"><div class="research-heading"><p class="eyebrow">04 / RESEARCH IN PROGRESS</p><h2 id="research-title">从“能写”，<br>走向“写在合适的位置”。</h2><p>当前进一步研究错误证据与书写布局的关联：在保护原有内容、保持可读字号并考虑落笔误差的条件下，把批注放到更容易理解的位置。</p></div><div class="research-grid"><article><span class="research-number">01</span><h3>定位错误证据</h3><p>视觉语言模型提供错误行或步骤的粗框，让批注有明确的语义关联。</p></article><article><span class="research-number">02</span><h3>选择安全书写区</h3><p>筛除与原文冲突的位置，再依据错误距离和简单阅读规则安排短批注。</p></article><article><span class="research-number">03</span><h3>验证实际反馈</h3><p>结合布局对照、关联评价与实体落笔实验，检验安全性和批注效果。</p></article></div><p class="research-note">上述为正在推进的研究方向；页面中的已有流程示例不代表该研究已完成验证。</p></div></section>
+  </main>
+
+  <footer class="footer wrap"><a class="brand footer-brand" href="#"><span class="brand-mark" aria-hidden="true">S<span>c</span></span><span>ScriptChisel<small>基于涂鸦 AIoT 的端边协同智能批改机器人</small></span></a><p>把理解连接到行动。<br><span>项目介绍 · 图片来自 App、样机与项目论文材料</span></p><a class="text-link" href="#main">回到顶部</a></footer>
+
+  <dialog class="image-dialog" id="image-dialog" aria-labelledby="dialog-caption"><div class="dialog-toolbar"><p id="dialog-caption"></p><button class="dialog-close" type="button" aria-label="关闭图片预览">关闭 <span aria-hidden="true">×</span></button></div><img id="dialog-image" alt=""><p class="dialog-hint">按 Esc 或点击图片外部关闭</p></dialog>
+</body>
+</html>
+

@@ -1,0 +1,75 @@
+{
+  "machine": {
+    "source": "提交材料/contest_paper/images/render_overall.png",
+    "output": "assets/machine.webp"
+  },
+  "machine-arm": {
+    "source": "提交材料/contest_paper/images/render_arm.png",
+    "output": "assets/machine-arm.webp"
+  },
+  "machine-feed": {
+    "source": "提交材料/contest_paper/images/render_feed.png",
+    "output": "assets/machine-feed.webp"
+  },
+  "machine-control": {
+    "source": "提交材料/contest_paper/images/render_control.png",
+    "output": "assets/machine-control.webp"
+  },
+  "prototype": {
+    "source": "提交材料/contest_paper/images/photo_oblique.jpg",
+    "output": "assets/prototype.webp"
+  },
+  "app-panel": {
+    "source": "提交材料/contest_paper/images/tuya_panel.png",
+    "output": "assets/app-panel.webp"
+  },
+  "app-panel-detail": {
+    "source": "提交材料/contest_paper/images/tuya_panel_2.png",
+    "output": "assets/app-panel-detail.webp"
+  },
+  "dashboard": {
+    "source": "提交材料/contest_paper/images/dashboard_new.png",
+    "output": "assets/dashboard.webp"
+  },
+  "pipeline-original": {
+    "source": "提交材料/contest_paper/images/pipeline_comparison_origin1/01_original_paper.png",
+    "output": "assets/pipeline-original.webp"
+  },
+  "pipeline-detection": {
+    "source": "提交材料/contest_paper/images/pipeline_comparison_origin1/02_yolo_detection.png",
+    "output": "assets/pipeline-detection.webp"
+  },
+  "pipeline-planning": {
+    "source": "提交材料/contest_paper/images/pipeline_comparison_origin1/03_annotation_planning.png",
+    "output": "assets/pipeline-planning.webp"
+  },
+  "rendered-text": {
+    "source": "论文/figures/pipeline_render.png",
+    "output": "assets/rendered-text.webp"
+  },
+  "skeleton": {
+    "source": "论文/figures/pipeline_skeleton.png",
+    "output": "assets/skeleton.webp"
+  },
+  "strokes": {
+    "source": "论文/figures/pipeline_strokes.png",
+    "output": "assets/strokes.webp"
+  },
+  "pcb": {
+    "source": "论文/figures/hw_3d_top.png",
+    "output": "assets/pcb.webp"
+  },
+  "corexy": {
+    "source": "论文/figures/corexy_sw_iso.png",
+    "output": "assets/corexy.webp"
+  },
+  "poster": {
+    "source": "app/src/public/hero-video-poster.jpg",
+    "output": "assets/poster.webp"
+  },
+  "writing-machine.gif": {
+    "source": "app\\src\\public\\hero-video-lite.mp4",
+    "frames": 98,
+    "duration_seconds": 9.875
+  }
+}
